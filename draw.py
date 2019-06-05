@@ -56,7 +56,7 @@ class Maze(object):
         turtle.color("#00ffff")
         for x, y in self.beacons:
             turtle.setposition(x, y)
-            turtle.dot()
+            turtle.dot(20)
         turtle.update()
 
     def weight_to_color(self, weight):
