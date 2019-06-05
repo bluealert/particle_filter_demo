@@ -11,7 +11,7 @@ import turtle
 import random
 
 turtle.tracer(50000, delay=0)
-turtle.register_shape("dot", ((-3,-3), (-3,3), (3,3), (3,-3)))
+turtle.register_shape("dot", ((-3, -3), (-3, 3), (3, 3), (3, -3)))
 turtle.register_shape("tri", ((-3, -2), (0, 3), (3, -2), (0, 0)))
 turtle.speed(0)
 turtle.title("Poor robbie is lost")
@@ -19,11 +19,12 @@ turtle.title("Poor robbie is lost")
 UPDATE_EVERY = 0
 DRAW_EVERY = 2
 
+
 class Maze(object):
     def __init__(self, maze):
         self.maze = maze
-        self.width   = len(maze[0])
-        self.height  = len(maze)
+        self.width = len(maze[0])
+        self.height = len(maze)
         turtle.setworldcoordinates(0, 0, self.width, self.height)
         self.blocks = []
         self.update_cnt = 0
@@ -36,7 +37,8 @@ class Maze(object):
                     nb_y = self.height - y - 1
                     self.blocks.append((x, nb_y))
                     if block == 2:
-                        self.beacons.extend(((x, nb_y), (x+1, nb_y), (x, nb_y+1), (x+1, nb_y+1)))
+                        self.beacons.extend(((x, nb_y), (x + 1, nb_y),
+                                             (x, nb_y + 1), (x + 1, nb_y + 1)))
 
     def draw(self):
         for x, y in self.blocks:
@@ -127,7 +129,7 @@ class Maze(object):
                 return x, y
 
     def distance(self, x1, y1, x2, y2):
-        return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+        return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
     def distance_to_nearest_beacon(self, x, y):
         d = 99999
@@ -137,4 +139,4 @@ class Maze(object):
                 d = distance
                 d_x, d_y = c_x, c_y
 
-        return d
+        return d, d_x, d_y

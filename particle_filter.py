@@ -184,7 +184,8 @@ class Robot(Particle):
         it only can measure the distance to the nearest beacon(!)
         and is not very accurate at that too!
         """
-        return add_little_noise(super(Robot, self).read_sensor(maze))[0]
+        d, d_x, d_y = super(Robot, self).read_sensor(maze)
+        return add_little_noise(d, d_x, d_y)
 
     def move(self, maze):
         """
@@ -210,13 +211,14 @@ robbie = Robot(world)
 
 while True:
     # Read robbie's sensor
-    r_d = robbie.read_sensor(world)
+    r_d, r_d_x, r_d_y = robbie.read_sensor(world)
 
     # Update particle weight according to how good every particle matches
     # robbie's sensor reading
     for p in particles:
         if world.is_free(*p.xy):
-            p_d = p.read_sensor(world)
+            p_d = world.distance(r_d_x, r_d_y, p.x, p.y)
+            #p_d = p.read_sensor(world)
             p.w = w_gauss(r_d, p_d)
         else:
             p.w = 0
